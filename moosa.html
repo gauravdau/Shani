@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Satna to Amarpatan Ticket Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: pink;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background-color: #red;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .passenger-input {
+      margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+      width: 90%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .total {
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    button {
+      background-color: black;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    button:hover {
+      background-color: blue;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Satna ➝ Amarpatan Ticket Booking SHUKLA BUS SARVICE</h2>
+    <p>Ticket Price: ₹60 per person</p>
+
+    <div id="passengerList">
+      <div class="passenger-input">
+        <input type="text" name="passenger" placeholder="Enter passenger name">
+      </div>
+    </div>
+
+    <button onclick="addPassenger()">Add Another Passenger</button>
+    <button onclick="bookTickets()">Book Ticket</button>
+
+    <div class="total">
+      Total Tickets: <span id="ticketCount">1</span><br>
+      Total Price: ₹<span id="totalPrice">60</span>
+    </div>
+
+    <div id="confirmation" style="margin-top:20px;"></div>
+  </div>
+
+  <script>
+    const pricePerTicket = 60;
+    const passengerList = document.getElementById('passengerList');
+    const ticketCountSpan = document.getElementById('ticketCount');
+    const totalPriceSpan = document.getElementById('totalPrice');
+    const confirmation = document.getElementById('confirmation');
+
+    function addPassenger() {
+      const div = document.createElement('div');
+      div.className = 'passenger-input';
+      div.innerHTML = '<input type="text" name="passenger" placeholder="Enter passenger name">';
+      passengerList.appendChild(div);
+      updateTotal();
+    }
+
+    function updateTotal() {
+      const names = document.getElementsByName('passenger');
+      const count = names.length;
+      ticketCountSpan.textContent = count;
+      totalPriceSpan.textContent = count * pricePerTicket;
+    }
+
+    function bookTickets() {
+      const names = document.getElementsByName('passenger');
+      let passengers = [];
+      for (let input of names) {
+        if (input.value.trim() !== '') {
+          passengers.push(input.value.trim());
+        }
+      }
+
+      if (passengers.length === 0) {
+        alert('Please enter at least one passenger name.');
+        return;
+      }
+
+      const total = passengers.length * pricePerTicket;
+      let output = `<h3>Booking Confirmed!</h3>`;
+      output += `<p>Passengers (${passengers.length}):</p><ul>`;
+      passengers.forEach(name => {
+        output += `<li>${name}</li>`;
+      });
+      output += `</ul><p>Total Amount: ₹${total}</p>`;
+      confirmation.innerHTML = output;
+
+      updateTotal(); // update count and price
+    }
+
+    // Initial update
+    updateTotal();
+  </script>
+
+</body>
+</html>
